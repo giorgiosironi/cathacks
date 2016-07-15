@@ -2,8 +2,6 @@
 
 namespace Md\PropertyTesting\Generator;
 
-use Md\PropertyTesting\Generator\ImmListGenerator as ListGen;
-
 use Md\CatHacks\Types\Kind;
 
 use Eris\Generator\IntegerGenerator as IntGen;
@@ -11,12 +9,13 @@ use Eris\Generator\StringGenerator as StringGen;
 use Eris\Generator\ElementsGenerator as ElementsGen;
 use Eris\Generator\OneOfGenerator as OneOfGen;
 use Eris\Generator\MapGenerator as MapGen;
+use Eris\Generator\SequenceGenerator as SequenceGen;
 
 trait RandomContainersGenerator
 {
-    private function genRandomList(): ListGen
+    private function genRandomList(): MapGen
     {
-        return new ListGen(new OneOfGen([new IntGen(), new StringGen()]));
+        return new MapGen($s ==> ImmList(...$s), new SequenceGen(new OneOfGen([new IntGen(), new StringGen()])));
     }
 
     private function genFunctionIntToString(): ElementsGen
